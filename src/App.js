@@ -1,26 +1,34 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Login from './components/Login';
+import Header from './components/Header';
+// import {Provider} from 'react-redux';
+// import store from './redux/store';
+import Search from './components/Search';
+import TaskList from './components/TaskList';
+import {connect} from 'react-redux';
+import {setName} from './redux/actions/user.action';
 
-function App() {
+function App({changeNameFromLogin}) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    // <Provider store={store}>
+      <div className="App">
+        <Header/>
+        <Login cb={changeNameFromLogin}/>
+        <Search/>
+        <TaskList/>
+      </div>
+    // </Provider>
   );
 }
-
-export default App;
+export default connect (
+    undefined,
+    (dispatch) => {
+        return {
+            changeNameFromLogin: function(newName) {
+                dispatch(setName(newName));
+            }
+        }
+    }
+)(App);
+//export default App;
